@@ -40,11 +40,15 @@ public class BootStrapData implements CommandLineRunner {
         jTolkien.getBooks().add(lordOfTheRings);
         lordOfTheRings.getAuthors().add(jTolkien);
 
+
         authorRepository.save(jTolkien);
         bookRepository.save(lordOfTheRings);
 
         Publisher bPublishing = new Publisher("bonusPublishing",
                 "310 New Street, Birmingham, West Midlands, 3 4DH");
+
+        lordOfTheRings.setPublisher(bPublishing);
+        harryPotter.setPublisher(bPublishing);
         publisherRepository.save(bPublishing);
 
         System.out.println("Started in Bootstrap");
