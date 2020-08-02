@@ -1,9 +1,12 @@
 package guru.springframework.spring5webapp.bootstrap;
 
+import guru.springframework.spring5webapp.common.Address;
 import guru.springframework.spring5webapp.domain.Author;
 import guru.springframework.spring5webapp.domain.Book;
+import guru.springframework.spring5webapp.domain.Publisher;
 import guru.springframework.spring5webapp.repositories.AuthorRepository;
 import guru.springframework.spring5webapp.repositories.BookRepository;
+import guru.springframework.spring5webapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +17,12 @@ public class BootStrapData implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -38,6 +43,10 @@ public class BootStrapData implements CommandLineRunner {
         authorRepository.save(jTolkien);
         bookRepository.save(lordOfTheRings);
 
+        Publisher bPublishing = new Publisher("bonusPublishing",
+                "310 New Street, Birmingham, West Midlands, 3 4DH");
+        publisherRepository.save(bPublishing);
+
         System.out.println("Started in Bootstrap");
         System.out.println("Number of Books: " + bookRepository.count());
         Iterator<Book> books = bookRepository.findAll().iterator();
@@ -45,6 +54,8 @@ public class BootStrapData implements CommandLineRunner {
         while(books.hasNext()) {
             System.out.println(books.next());
         }
+
+        System.out.println("Publisher Count: " + publisherRepository.count());
 
 
     }
