@@ -1,29 +1,36 @@
 package guru.springframework.spring5webapp.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 @Entity
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
     private String title;
     private String isbn;
 
     @ManyToMany
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors;
+    private Set<Author> authors = new HashSet<>();
+
+    public Book(String title, String isbn) {
+        this.title = title;
+        this.isbn = isbn;
+    }
 
     public Book() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -72,7 +79,20 @@ public class Book {
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", authors=" + authors +
+                //", authors=" + set2String(authors) +
                 '}';
+    }
+
+    public <E> String set2String(Set<E> set) {
+        String output = "[";
+        Iterator<E> setIterator = set.iterator();
+        while(setIterator.hasNext()) {
+            output += setIterator.next() + ", ";
+            if(!setIterator.hasNext()) {
+                output =  output.substring(0, output.length()-2);
+            }
+        }
+        output += "]";
+        return output;
     }
 }
