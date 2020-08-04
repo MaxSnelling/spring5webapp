@@ -90,20 +90,7 @@ public class Book {
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                //", authors=" + set2String(authors) +
                 '}';
     }
 
-    public <E> String set2String(Set<E> set) {
-        String output = "[";
-        Iterator<E> setIterator = set.iterator();
-        while(setIterator.hasNext()) {
-            output += setIterator.next() + ", ";
-            if(!setIterator.hasNext()) {
-                output =  output.substring(0, output.length()-2);
-            }
-        }
-        output += "]";
-        return output;
-    }
 }
